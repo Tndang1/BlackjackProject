@@ -19,10 +19,10 @@ public class BlackjackApp {
 	}
 
 	public void startingHands() {
-		dealer.hit(dealer.draw());
-		dealer.hit(dealer.draw());
-		player.hit(dealer.draw());
-		player.hit(dealer.draw());
+//		dealer.hit(dealer.draw());
+		System.out.println("The dealer drew two cards and flipped a " + dealer.hit(dealer.draw()));
+//		player.hit(dealer.draw());
+		System.out.println("You were dealt a " + player.hit(dealer.draw()) + " and a " + player.hit(dealer.draw()));
 
 	}
 
@@ -34,32 +34,38 @@ public class BlackjackApp {
 
 		boolean stopRun = false;
 		while (stopRun == false) {
+			boolean goodInt = false;
+			while (goodInt == false) {
+			System.out.println("You have a total of " + playerScore);
+			System.out.println();
 			System.out.println("The dealer is showing " + dealer.hand.getCardValue());
-			System.out.println("You have a total value of " + playerScore);
+			System.out.println();
 			System.out.println("Please make a selection.");
 			System.out.println("1: Hit");
 			System.out.println("2: Stay");
 			try {
 				choice = kb.nextInt();
+				goodInt = true;
 			} catch (Exception e) {
 				System.err.println("Pick a valid option. >:(");
+				kb.next();
+			}
 			}
 			switch (choice) {
 			case 1:
-				player.hit(dealer.draw());
+				
+				System.out.println("You drew a " + player.hit(dealer.draw()));
 				System.out.println(player.hand.getHandValue());
 				playerScore = player.hand.getHandValue();
-				System.out.println("You have a total value of " + playerScore);
 				stopRun = player.hand.isBust(playerScore);
 				break;
 			case 2:
 				stopRun = player.stay();
 				break;
 			default:
-				System.out.println("You're trying to cheat? Police are on their way.");
+				System.out.println("You're trying to cheat? The police are on their way.");
 			}
 		}
-//		while (stopRun = false);
 
 		pickWinner(playerScore, dealerScore);
 
@@ -91,12 +97,13 @@ public class BlackjackApp {
 	}
 
 	public int dealerTurn(int dealerScore) {
-		System.out.println("The dealer flipped their card and has " + dealerScore);
+		System.out.print("The dealer flipped their card, it is a " + dealer.hit(dealer.draw()));
+		dealerScore = dealer.hand.getHandValue();
+		System.out.println(", they have " + dealerScore);
 		while (dealerScore < 17) {
-			dealer.hit(dealer.draw());
+			System.out.print("The dealer drew a " + dealer.hit(dealer.draw()));
 			dealerScore = dealer.hand.getHandValue();
-			System.out.println("The dealer drew and now has a " + dealerScore);
-//			dealer.hand.isBust(dealerScore);
+			System.out.println(", they have " + dealerScore);
 		}
 		return dealerScore;
 

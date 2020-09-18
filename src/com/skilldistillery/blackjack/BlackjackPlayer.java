@@ -9,8 +9,9 @@ public class BlackjackPlayer {
 		hand = new BlackjackHand();
 		
 	}
-	public void hit(Card card) {
+	public String hit(Card card) {
 		hand.addCard(card);
+		return card.toString();
 	}
 	
 	public boolean stay() {
