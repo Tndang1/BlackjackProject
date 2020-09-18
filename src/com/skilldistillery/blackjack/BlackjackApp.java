@@ -31,9 +31,9 @@ public class BlackjackApp {
 		int choice = 0;
 		int playerScore = player.hand.getHandValue();
 		int dealerScore = dealer.hand.getHandValue();
-		
+
 		boolean stopRun = false;
-		 do {
+		while (stopRun == false) {
 			System.out.println("The dealer is showing " + dealer.hand.getCardValue());
 			System.out.println("You have a total value of " + playerScore);
 			System.out.println("Please make a selection.");
@@ -47,7 +47,6 @@ public class BlackjackApp {
 			switch (choice) {
 			case 1:
 				player.hit(dealer.draw());
-				dealer.deckSize();
 				System.out.println(player.hand.getHandValue());
 				playerScore = player.hand.getHandValue();
 				System.out.println("You have a total value of " + playerScore);
@@ -58,21 +57,21 @@ public class BlackjackApp {
 				break;
 			default:
 				System.out.println("You're trying to cheat? Police are on their way.");
-				stopRun = true;
 			}
-		} while (stopRun = false);
-		 
+		}
+//		while (stopRun = false);
+
 		pickWinner(playerScore, dealerScore);
-		
+
 		kb.close();
 	}
-	
+
 	public void pickWinner(int playerScore, int dealerScore) {
 		if (player.hand.isBust(playerScore) == false) {
 			dealerScore = dealerTurn(dealerScore);
-			
+
 			if (dealer.hand.isBust(dealerScore) == false) {
-			evaluateScores(playerScore, dealerScore);
+				evaluateScores(playerScore, dealerScore);
 			} else {
 				System.out.println("Dealer busted, you win!");
 			}
@@ -80,17 +79,17 @@ public class BlackjackApp {
 			System.out.println("You busted, dealer wins. Give up the money now please.");
 		}
 	}
-	
+
 	public void evaluateScores(int playerTotal, int dealerTotal) {
 		if (playerTotal == dealerTotal) {
 			System.out.println("It's a tie!");
 		} else {
-		String result = playerTotal > dealerTotal ? "You won!" : "You lost!";
-		System.out.println(result);
+			String result = playerTotal > dealerTotal ? "You won!" : "You lost!";
+			System.out.println(result);
 		}
-		
+
 	}
-	
+
 	public int dealerTurn(int dealerScore) {
 		System.out.println("The dealer flipped their card and has " + dealerScore);
 		while (dealerScore < 17) {
@@ -100,9 +99,7 @@ public class BlackjackApp {
 //			dealer.hand.isBust(dealerScore);
 		}
 		return dealerScore;
-		
+
 	}
-	
-	
 
 }

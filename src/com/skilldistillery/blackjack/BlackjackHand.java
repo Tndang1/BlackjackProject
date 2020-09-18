@@ -25,7 +25,7 @@ public class BlackjackHand extends Hand {
 	}
 	
 	public boolean isBust(int total) {
-		if (total < 21) {
+		if (total <= 21) {
 			return false;
 		} else {
 			return true;
