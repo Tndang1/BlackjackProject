@@ -1,7 +1,7 @@
-###Blackjack Project
+### Blackjack Project
 
-##Topics
+## Topics
 
-##Lessons Learned
+## Lessons Learned
 
-##How to Run
+## How to Run

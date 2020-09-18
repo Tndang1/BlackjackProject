@@ -11,9 +11,8 @@ public class Dealing {
 		int cardValueTotal = 0;
 		int amount = 0;
 
-		boolean badInt = true;
-
 		System.out.println("How many cards would you like?");
+		
 		try {
 			amount = kb.nextInt();
 			if (amount <= 52) {
@@ -28,7 +27,6 @@ public class Dealing {
 
 		} catch (Exception e) {
 			System.err.println("That was not a proper amount. Naughty naughty.");
-
 		}
 
 		System.out.println(cardValueTotal);
