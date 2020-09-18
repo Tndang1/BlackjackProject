@@ -5,7 +5,7 @@ import com.skilldistillery.common.cards.Hand;
 
 public class BlackjackHand extends Hand {
 	
-	int handValue = 0;
+	private int handValue = 0;
 	
 	public BlackjackHand() {
 		
