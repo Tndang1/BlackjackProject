@@ -9,7 +9,8 @@
 ## Lessons Learned
 
 # Creating a UML and plan of what each class should know about and how it needs to behave is clearly going to become critical as the programs continue to grow in size.
-
+# Creating a blackjack table class would have been a better solution, the app class is crowded.
+# It is important to not long stuck on one issue. In time I spent trying to get a working hard and soft ace I could have implemented several other features.
 
 ## How to Run
 
