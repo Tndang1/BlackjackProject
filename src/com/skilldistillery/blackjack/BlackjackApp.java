@@ -19,7 +19,7 @@ public class BlackjackApp {
 		dealer = new BlackjackDealer();
 		Boolean run = true;
 		while (run) {
-			dealer.newDeck();
+			clearCards();
 			play(kb);
 			run = playAgain(kb);
 		}
@@ -28,8 +28,7 @@ public class BlackjackApp {
 	}
 
 	public void play(Scanner kb) {
-		int choice = 0;
-
+		
 		Card dealerFaceCard = dealer.draw();
 		dealer.hit(dealerFaceCard);
 		System.out.println("The dealer drew two cards and flipped a " + dealerFaceCard.toString());
@@ -39,68 +38,58 @@ public class BlackjackApp {
 		
 		int playerScore = player.hand.getHandValue();
 		int dealerScore = dealer.hand.getHandValue();
+		
+		int finalPlayerScore = playerTurn(kb, playerScore, dealerFaceCard);
 
+		pickWinner(finalPlayerScore, dealerScore, dealerFlipCard);
+
+	}
+	
+	public int playerTurn(Scanner kb,int playerScore, Card dealerFaceCard) {
+		String choice = null;
 		boolean stopRun = false;
 		while (stopRun == false) {
-			boolean goodInt = false;
-			while (goodInt == false) {
-				System.out.println("You have a total of " + playerScore);
-				System.out.println("The dealer is showing " + dealerFaceCard.getValue());
-				System.out.println();
-				System.out.println("Please make a selection.");
-				System.out.println("1: Hit");
-				System.out.println("2: Stay");
-				try {
-					choice = kb.nextInt();
-					goodInt = true;
-				} catch (Exception e) {
-					System.err.println("Pick a valid option. >:(");
-					kb.next();
-				}
+		boolean goodInt = false;
+		while (goodInt == false) {
+			System.out.println("You have a total of " + playerScore);
+			System.out.println("The dealer is showing " + dealerFaceCard.getValue());
+			System.out.println();
+			System.out.println("Please make a selection.");
+			System.out.println("1: Hit");
+			System.out.println("2: Stay");
+			try {
+				choice = kb.next();
+				goodInt = true;
+			} catch (Exception e) {
+				System.err.println("Please pick a valid option.");
+				kb.next();
 			}
-			switch (choice) {
-			case 1:
-
-				System.out.println("You drew a " + player.hit(dealer.draw()));
+		}
+		switch (choice) {
+		case "1":
+		case "hit":
+			System.out.println("You drew a " + player.hit(dealer.draw()));
+			playerScore = player.hand.getHandValue();
+			if (playerScore == 21) {
+				System.out.println("That's 21!");
+				stopRun = true;
+				break;
+			}
+			if (player.hand.isBust(playerScore)) {
 				System.out.println(player.hand.getHandValue());
+				stopRun = player.hand.hasSoftAce();
 				playerScore = player.hand.getHandValue();
-				stopRun = player.hand.isBust(playerScore);
-				break;
-			case 2:
-				stopRun = player.stay();
-				break;
-			default:
-				System.out.println("You're trying to cheat? The police are on their way.");
 			}
-		}
-
-		pickWinner(playerScore, dealerScore, dealerFlipCard);
-		clearHands();
-
-	}
-
-	public void pickWinner(int playerScore, int dealerScore, Card dealerFlipCard) {
-		if (player.hand.isBust(playerScore) == false) {
-			dealerScore = dealerTurn(dealerScore, dealerFlipCard);
-
-			if (dealer.hand.isBust(dealerScore) == false) {
-				evaluateScores(playerScore, dealerScore);
-			} else {
-				System.out.println("Dealer busted, you win!");
-			}
-		} else {
-			System.out.println("You busted, dealer wins. Give up the money now please.");
+			break;
+		case "2":
+		case "stay":
+			stopRun = player.stay();
+			break;
+		default:
+			System.out.println("You're trying to cheat? The police are on their way.");
 		}
 	}
-
-	public void evaluateScores(int playerTotal, int dealerTotal) {
-		if (playerTotal == dealerTotal) {
-			System.out.println("It's a tie!");
-		} else {
-			String result = playerTotal > dealerTotal ? "You won!" : "You lost!";
-			System.out.println(result);
-		}
-
+		return playerScore;
 	}
 
 	public int dealerTurn(int dealerScore, Card dealerFlipCard) {
@@ -116,8 +105,33 @@ public class BlackjackApp {
 		return dealerScore;
 
 	}
+	
+	public void pickWinner(int playerScore, int dealerScore, Card dealerFlipCard) {
+		if (player.hand.isBust(playerScore) == false) {
+			dealerScore = dealerTurn(dealerScore, dealerFlipCard);
+			
+			if (dealer.hand.isBust(dealerScore) == false) {
+				evaluateScores(playerScore, dealerScore);
+			} else {
+				System.out.println("Dealer busted, you win!");
+			}
+		} else {
+			System.out.println("You busted, dealer wins. Give up the money now please.");
+		}
+	}
+	
+	public void evaluateScores(int playerTotal, int dealerTotal) {
+		if (playerTotal == dealerTotal) {
+			System.out.println("It's a tie!");
+		} else {
+			String result = playerTotal > dealerTotal ? "You won!" : "You lost!";
+			System.out.println(result);
+		}
+		
+	}
 
-	public void clearHands() {
+	public void clearCards() {
+		dealer.newDeck();
 		dealer.hand.clear();
 		player.hand.clear();
 	}
@@ -133,7 +147,7 @@ public class BlackjackApp {
 				choice = kb.next().toLowerCase();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				System.out.println("I have no idea what you did to get here.");
+				System.out.println("Please pick a valid option.");
 				kb.next();
 			}
 			switch (choice) {

@@ -9,8 +9,16 @@ public class Card {
 		this.rank = rank;
 	}
 	
+	public Card(String suit, Rank rank) {
+		this.rank = rank;
+	}
+	
 	public int getValue() {
 		return rank.getValue();
+	}
+	
+	public String getSuit() {
+		return suit.getName();
 	}
 	
 	@Override

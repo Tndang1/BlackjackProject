@@ -22,5 +22,4 @@ public abstract class Hand {
 	
 	public abstract int getCardValue();
 	
-	
 }

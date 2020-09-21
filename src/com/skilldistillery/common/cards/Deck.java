@@ -14,11 +14,13 @@ public class Deck {
 		for (Suit suit : suits) {
 			Rank[] ranks = Rank.values();
 			for (Rank rank : ranks) {
+				if (rank.getValue() == 1) {
+					continue;
+				}
 				Card toAdd = new Card(suit, rank);
 				deck.add(toAdd);
 			}
 		}
-		
 	}
 	
 	public int checkDeckSize() {
