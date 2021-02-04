@@ -17,6 +17,10 @@ public class Card {
 		return rank.getValue();
 	}
 	
+	public void setValue(int value) {
+		rank.setValue(value);
+	}
+	
 	public String getSuit() {
 		return suit.getName();
 	}

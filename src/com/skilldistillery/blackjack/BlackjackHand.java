@@ -2,7 +2,6 @@ package com.skilldistillery.blackjack;
 
 import com.skilldistillery.common.cards.Card;
 import com.skilldistillery.common.cards.Hand;
-import com.skilldistillery.common.cards.Rank;
 
 public class BlackjackHand extends Hand {
 	
@@ -16,29 +15,17 @@ public class BlackjackHand extends Hand {
 	public int getHandValue() {
 		handValue = 0;
 		for (Card card : hand) {
-			handValue = handValue + card.getValue();
-		}
-		return handValue;
-	}
-	
-	public boolean hasSoftAce() {
-		for (Card card : hand) {
-			if(card.getValue() == 11) {
-				toSoftAce();
-				return false;
+			handValue += card.getValue();
+			if(handValue > 21) {
+				for(Card cardB: hand) {
+					if(cardB.getValue() == 11) {
+						cardB.setValue(1);
+						handValue -= 10;
+					}
+				}
 			}
 		}
-		return true;
-	}
-	
-	private void toSoftAce() {
-		for (Card card : hand) {
-			if(card.getValue() == 11) {
-				Card softCard = new Card(card.getSuit(), Rank.SOFT_ACE);
-				hand.add(softCard);
-				hand.remove(card);
-				break;
-		}}
+		return handValue;
 	}
 	
 	public int getCardValue() {
